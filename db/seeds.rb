@@ -1,24 +1,24 @@
 speciality = ['teacher', 'ta', 'student']
 
 
-10.times do
+5.times do
   doctor = Doctor.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
+    speciality: "Cardiac Specialist",
+    bio: Faker::Lorem.paragraph(sentence_count: 2)
     
   )
-
- 
-  10.times do 
+  5.times do 
     user = User.create(
       first_name: Faker::Name.first_name,
-      last_name: Faker::Name.last_name
-      phone: "(888) 545-7575"
+      last_name: Faker::Name.last_name,
+      phone: "(888) 545-7575",
+      notes: Faker::Lorem.paragraph(sentence_count: 2)
     )
-
     Appointment.create(
-      time: Faker::Timer.between(from: 'October 15, 2018 10:48 AM')
-      date: Faker::Date.between(from: '2022-01-01', to: '2022-12-31')
+      appt_time: Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :short),
+      appt_date: Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :short),
       user_id: user.id,
       doctor_id: doctor.id
     )

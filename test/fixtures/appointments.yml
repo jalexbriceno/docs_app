@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  appt_time: 2022-03-24 19:21:19
-  appt_date: 2022-03-24
+  appt_date: 2022-03-25 10:30:03
+  appt_time: 2022-03-25 10:30:03
   user: one
   doctor: one
 
 two:
-  appt_time: 2022-03-24 19:21:19
-  appt_date: 2022-03-24
+  appt_date: 2022-03-25 10:30:03
+  appt_time: 2022-03-25 10:30:03
   user: two
   doctor: two

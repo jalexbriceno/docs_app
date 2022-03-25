@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  
+  namespace :api do
+    resources :users
+      resources :doctors do
+        resources :appointments
+      
+    end
+    get '/:id/doctors', to: 'users#doctors'
+    get '/:id/users', to: 'doctors#users'
+  end
 
-  # Defines the root path route ("/")
-  # root "articles#index"
 end

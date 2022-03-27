@@ -1,11 +1,11 @@
 import Appointment from './Appointment';
 
-const AppointmentList = ({ Appointment,  updateAppointment, deleteAppointment }) => (
+const AppointmentList = ({ appointment,  updateAppointment, deleteAppointment }) => (
   <>
-    { appointments.map( c => 
+    { appointment.map( a => 
       <Appointment 
-        key={c.id}
-        {...c}
+        key={a.id}
+        {...a}
         updateAppointment={updateAppointment}
         deleteAppointment={deleteAppointment}
       />

@@ -1,59 +1,57 @@
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useParams, useLocation } from "react-router-dom";
 import AppointmentForm from './AppointmentForm';
 import AppointmentList from './AppointmentList';
+import { Button, Spinner } from 'react-bootstrap';
+import { AppointmentConsumer } from '../../providers/AppointmentProvider';
 
-const Appointments = () => {
-  const { topicId } = useParams()
-  const [appointments, setAppointments] = useState(false)
+const Appointments = ({ getAllAppointments, getAppointmentUsers, appt_date, appt_time }) => {
+  const [adding, setAdd] = useState(false)
+  const [loading, setLoaded] = useState(false)
+
+  const { doctorId } = useParams()
+  const location = useLocation()
+  const { doctorName } = location.state
 
   useEffect( () => {
-    axios.get(`/api/Doctors/${DoctorId}/appointments`)
-      .then( res => setAppointments(res.data) )
-      .catch( err => console.log(err) )
+    getAllAppointments(doctorId)
+    getAppointmentUsers(doctorId)
   }, [])
-
-  const addAppointment = (appointment) => {
-    axios.get(`/api/Doctors/${DoctorId}/appointments`)
-      .then( res => setAppointments([...appointments, res.data]))
-      .catch( err => console.log(err) )
-  }
-
-  const updateAppointment = (id, appointment) => {
-    axios.put(`/api/users/${userId}/appointments/${id}`, { appointment })
-      .then( res => {
-        const newUpdatedAppointments = appointment.map( c => {
-          if (c.id === id) {
-            return res.data
-          }
-          return c
-        })
-        setAppointments(newUpdatedAppointments)
-      })
-      .catch( err => console.log(err) )
-  }
-
-  const deleteAppointment = (id) => {
-    axios.delete(`/api/users/${userId}/appointments/${id}`)
-      .then( res => {
-        setAppointments(appointments.filter( c => c.id !== id ))
-        alert(res.data.message)
-      })
-      .catch( err => console.log(err) )
-  }
 
   return (
     <>
-      <h1>Appointments</h1>
-      <AppointmentForm addAppointment={addAppointment} />
-      <AppointmentList 
-        appointments={appointments} 
-        updateAppointment={updateAppointment}
-        deleteAppointment={deleteAppointment}
-      />
+      {
+        loading ?
+          <Spinner animation="border" variant="primary" />
+        :
+        <>
+          { adding ? 
+            <>
+              <AppointmentForm 
+                setAdd={setAdd}
+                doctorId={doctorId}
+              />
+              <Button onClick={() => setAdd(false)}>Cancel</Button>
+            </>
+            :
+            <Button onClick={() => setAdd(true)}>+</Button>
+          }
+          <h1>All Appointments for Doctor {doctorName}</h1>
+          <AppointmentList
+            // how to show user name???
+            date={appt_date}
+            time={appt_time}
+          />
+        </>
+      }
     </>
   )
 }
 
-export default Appointments;
+const ConnectedAppointments = (props) => (
+  <AppointmentConsumer>
+    { value => <Appointments {...props} {...value} />}
+  </AppointmentConsumer>
+)
+
+export default ConnectedAppointments;

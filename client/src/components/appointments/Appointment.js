@@ -1,34 +1,21 @@
-import { useState } from 'react';
-import AppointmentForm from './AppointmentForm';
+const Appointment = ({ appt_date, appt_time, user_id, appointment}) => {
 
-const Comment = ({ addUser, setAdd, id, first_name, last_name, phone, notes, updateUser, setEdit }) => {
-  const [editing, setEdit] = useState(false)
+  const displayUSer = (id) => {
+    let fullName
+    appointment.map( u => {
+      if (u.id === id) {
+        fullName = u.first_name + " " + u.last_name
+      }
+    })
+    return fullName
+  }
 
   return (
     <>
-      {
-        editing ?
-          <>  
-            <AppointmentForm 
-              id={id}
-              doctor ={doctor}
-              user={user}
-              updateAppointment={updateAppointment}
-              setEdit={setEdit}
-            />
-            <button onClick={() => setEdit(false)}>Cancel</button>
-          </>
-        : 
-        <>
-          <h1>Doctor: {doctor}</h1>
-          <p>Message: {user}</p>
-          <button onClick={() => setEdit(true)}>Edit</button>
-          <button onClick={() => deleteAppointment(id)}>Delete</button>
-        </>
-      }
-      
+      <h3>{displayUSer(user_id)}</h3>
     </>
   )
+
 }
 
 export default Appointment;

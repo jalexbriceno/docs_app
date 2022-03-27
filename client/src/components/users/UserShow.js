@@ -25,11 +25,11 @@ const UserShow = ({deleteUser }) => {
   }, [])
 
 
-  // useEffect( () => {
-  //   axios.get(`/api/${userId}/doctors`)
-  //     .then( res => setDoctors(res.data))
-  //     .catch(err => console.log(err))
-  // }, [])
+  useEffect( () => {
+    axios.get(`/api/${userId}/doctors`)
+      .then( res => setDoctors(res.data))
+      .catch(err => console.log(err))
+  }, [])
 
   const { first_name, last_name, phone, notes} = user
   return (

@@ -7,48 +7,31 @@ export const AppointmentContext = React.createContext()
 export const AppointmentConsumer = AppointmentContext.Consumer
 
 const AppointmentProvider = ({ children }) => {
-  const [appt_date, setApptDate] = useState([])
-  const [appt_time, setApptTime] = useState([])
+  const [appointments, setAppointments] = useState([])
   const navigate = useNavigate()
 
   const getAllAppointments = (doctorId) => {
     axios.get(`/api/doctors/${doctorId}/appointments`)
-    .then( res => {
-      setApptDate(res.data.date)
-      setApptTime(res.data.time)
-    })
+    .then( res => setAppointments(res.data))
     .catch( err => console.log(err) )
   }
 
-  const getAppointmentUsers = (doctorId) => {
-    axios.get(`api/doctors/${doctorId}/appointments`)
-      .then( res => setAppointment(res.data) )
-      .catch( err => console.log(err) )
-  }
-
-  // whichRole
-
-  // not sure about this
   const addAppointment = (doctorId, appointment) => {
-    axios.post(`/api/doctors/${doctorId}/appointments/${id}`, { appointment })
-      .then(res => setAppointment(res.data))
+    axios.post(`/api/doctors/${doctorId}/appointments`, { appointment })
+      .then(res => setAppointment([...appointments, res.data]))
       .catch( err => console.log(err) )
   }
 
-  // whichArr
-
-  // whichFunction
-
-  // not sure about this
   const updateAppointment = (doctorId, id, appointment) => {
     axios.put(`/api/doctors/${doctorId}/appointments/${id}`, { appointment })
       .then( res => {
-        const newUpdatedAppointment = appointment.map( a => {
+        const newUpdatedAppointments = appointment.map( a => {
           if (a.id === id) {
             return res.data
           }
           return a
         })
+        setAppointments(newUpdatedAppointments)
         navigate(`/${doctorId}/appointments`)
       })
       .catch( err => console.log(err) )
@@ -58,9 +41,10 @@ const AppointmentProvider = ({ children }) => {
 
   // not sure about this
   
-  const deleteAppointment = (doctorId, id, appt_date, appt_time) => {
+  const deleteAppointment = (doctorId, id) => {
     axios.delete(`/api/doctors/${doctorId}/appointments/${id}`)
       .then( res=> {
+        setAppointments(appointments.filter( a => a.id !== id))
         navigate(`/${doctorId}/appointments`)
       })
       .catch( err => console.log(err) )
@@ -68,10 +52,8 @@ const AppointmentProvider = ({ children }) => {
 
   return (
     <AppointmentContext.Provider value={{
-      appt_date,
-      appt_time,
+      appointments,
       getAllAppointments: getAllAppointments,
-      getAppointmentUsers: getAppointmentUsers,
       addAppointment: addAppointment,
       updateAppointment: updateAppointment,
       deleteAppointment: deleteAppointment,

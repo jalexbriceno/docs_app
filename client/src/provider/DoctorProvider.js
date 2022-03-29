@@ -8,16 +8,18 @@ export const DoctorConsumer = DoctorContext.Consumer
 
 const DoctorProvider = ({ children }) => {
   const [doctors, setDoctors] = useState([])
+
   const navigate = useNavigate()
+
 
   useEffect( () => {
     axios.get('/api/doctors')
-      .then( res => setDoctors(res.data) )
-      .catch( err => console.log(err))
+    .then(res => setDoctors(res.data))
+    .catch( err => console.log(err))
   }, [])
 
   const addDoctor = (doctor) => {
-    axios.post('/api/doctors', { doctor })
+    axios.post('/api/doctors', {doctor})
       .then( res => setDoctors([...doctors, res.data]))
       .catch( err => console.log(err))
   }
@@ -25,12 +27,12 @@ const DoctorProvider = ({ children }) => {
   const updateDoctor = (id, doctor) => {
     axios.put(`/api/doctors/${id}`, { doctor })
       .then( res => {
-        const newUpdateDoctor = doctors.map( c => {
-          if (c.id === id) {
+        const newUpdateDoctor = doctors.map( d => {
+          if (d.id === id) {
             return res.data
           }
-          return c
-          // return c.id === id ? res.data : c
+          return d
+        
         })
         setDoctors(newUpdateDoctor)
         navigate('/doctors')
@@ -46,12 +48,13 @@ const DoctorProvider = ({ children }) => {
       })
       .catch( err => console.log(err))
   }
+
   return (
     <DoctorContext.Provider value={{
       doctors,
-      addCourse: addDoctor,
-      updateCourse: updateDoctor,
-      deleteCourse: deleteDoctor,
+      addDoctor: addDoctor,
+      updateDoctor: updateDoctor,
+      deleteDoctor: deleteDoctor,
     }}>
       { children }
     </DoctorContext.Provider>

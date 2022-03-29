@@ -60,7 +60,7 @@ const UserShow = ({deleteUser }) => {
       </Button>
 
       <h4>All Current Seeing Doctors</h4>
-      {/* <Container>
+      <Container>
         <Row>
           {doctors.map(d => 
             <Col xs={6} md={3}>
@@ -76,7 +76,7 @@ const UserShow = ({deleteUser }) => {
             </Col>
           )}
         </Row>
-      </Container> */}
+      </Container>
       
     </>
   )

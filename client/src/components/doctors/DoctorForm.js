@@ -1,14 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Button, Card} from 'react-bootstrap';
 import { DoctorConsumer } from '../../provider/DoctorProvider';
 
-const DoctorForm = ({ addDoctor, setAdd }) => {
+const DoctorForm = ({ addDoctor, setAdd, id, first_name, last_name, bio, speciality, updateDoctor, setEdit  }) => {
   const [doctor, setDoctor] = useState({ first_name: '', last_name: '', bio: '', speciality: '' })
+
+  useEffect( () => {
+    if (id) {
+      setDoctor({first_name, last_name, bio, speciality})
+    }
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    addDoctor(doctor)
-    setAdd(false)
+    if (id) {
+      updateDoctor(id, doctor)
+      setEdit(false)
+    } else {
+      addDoctor(doctor)
+      setAdd(false)
+    }
     setDoctor({ first_name: '', last_name: '', bio: '', speciality: '' })
   }
 
@@ -58,7 +69,7 @@ const DoctorForm = ({ addDoctor, setAdd }) => {
           value={doctor.speciality}
           onChange={(e) => setDoctor({ ...doctor, speciality: e.target.value })}
         >
-          <option>All Speciality</option>
+          <option>Speciality</option>
           <option value="Head">Head</option>
           <option value="Shoulder">Shoulder</option>
           <option value="Knees">Knees</option>
@@ -81,4 +92,4 @@ const ConnectedDoctorForm = (props) => (
   </DoctorConsumer>
 )
 
-export default DoctorForm;
+export default ConnectedDoctorForm;

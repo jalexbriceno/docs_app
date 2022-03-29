@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, ListGroup } from 'react-bootstrap';
 import DoctorForm from './DoctorForm';
+import { DoctorConsumer } from "../../provider/DoctorProvider";
 
 const DoctorShow = ({deleteDoctor}) => {
   const [doctor, setDoctor] = useState({ first_name: '', last_name: '', speciality: '', bio: ''})
@@ -53,7 +54,7 @@ const DoctorShow = ({deleteDoctor}) => {
       >
         <Button>Appointment</Button>
       </Link> */}
-      <Button onClick={() => deleteDoctor(doctorId)}>
+      <Button onClick={() => deleteDoctor(doctor.id)}>
         Delete
       </Button>
       {/* <Button>
@@ -73,5 +74,10 @@ const DoctorShow = ({deleteDoctor}) => {
     </>
   )
 }
+const ConnectedDoctorShow = (props) => (
+  <DoctorConsumer>
+      {value => <DoctorShow {...props} {...value} /> }
+  </DoctorConsumer>
+)
 
-export default DoctorShow;
+export default ConnectedDoctorShow;

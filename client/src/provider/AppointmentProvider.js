@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ const AppointmentProvider = ({ children }) => {
 
   const addAppointment = (doctorId, appointment) => {
     axios.post(`/api/doctors/${doctorId}/appointments`, { appointment })
-      .then(res => setAppointment([...appointments, res.data]))
+      .then(res => setAppointments([...appointments, res.data]))
       .catch( err => console.log(err) )
   }
 
@@ -43,7 +43,7 @@ const AppointmentProvider = ({ children }) => {
   
   const deleteAppointment = (doctorId, id) => {
     axios.delete(`/api/doctors/${doctorId}/appointments/${id}`)
-      .then( res=> {
+      .then( res => {
         setAppointments(appointments.filter( a => a.id !== id))
         navigate(`/${doctorId}/appointments`)
       })

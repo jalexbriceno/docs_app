@@ -44,7 +44,7 @@ const AppointmentProvider = ({ children }) => {
           return a
         })
         setAppointments(newUpdatedAppointment)
-        navigate(`/doctors/${doctorId}`)
+        navigate(`/${doctorId}/appointments`)
       })
       .catch( err => console.log(err) )
   }

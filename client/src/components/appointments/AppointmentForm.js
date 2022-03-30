@@ -25,7 +25,7 @@ const AppointmentForm = ({ addAppointment, setAdd, doctorId, updateAppointment, 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (id) {
-      updateAppointment(doctorId, user_id, appointment)
+      updateAppointment(doctorId, id, appointment)
       setEdit(false)
     } else {
       addAppointment(doctorId, appointment)

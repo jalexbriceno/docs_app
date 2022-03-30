@@ -1,13 +1,13 @@
 
 
-speciality = ['teacher', 'ta', 'student']
+speciality = ['Head', 'Shoulders', 'Knees', 'Toes']
 
 
 5.times do
   doctor = Doctor.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    speciality: "Cardiac Specialist",
+    speciality: speciality.sample,
     bio: Faker::Lorem.paragraph(sentence_count: 2)
     
   )

@@ -17,7 +17,7 @@ const App = () => (
       <Route path='/' element={ <Home /> } />
       <Route path='/doctors' element={ <Doctors /> } />
       <Route path='/doctors/:doctorId' element={ <DoctorShow /> } />
-      {/* <Route path='/:doctorId/appointments' element={ <Appointments /> } /> */}
+      <Route path='/:doctorId/appointments' element={ <Appointments /> } />
       <Route path='/users' element={ <Users /> } />
       <Route path='/users/:userId' element={ <UserShow /> } />
       <Route path='*' element={ <Nomatch /> } />

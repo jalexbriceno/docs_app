@@ -27,7 +27,7 @@ const DoctorForm = ({ addDoctor, setAdd, id, first_name, last_name, bio, special
     <>
       <Card style={{ width: '32rem' }}>
       <Card.Body>
-      <h1>Add Doctor</h1>
+      <h1>{ id ? "Update Doctor" : "Create Doctor"}</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>First Name</Form.Label>
@@ -52,6 +52,21 @@ const DoctorForm = ({ addDoctor, setAdd, id, first_name, last_name, bio, special
           />
         </Form.Group>
         <Form.Group className="mb-3">
+        <Form.Label>Speciality</Form.Label>
+          <Form.Select 
+            aria-label="Default select example"
+            name='speciality'
+            value={doctor.speciality}
+            onChange={(e) => setDoctor({ ...doctor, speciality: e.target.value })}
+          >
+            <option>Select One...</option>
+            <option value="Head">Head</option>
+            <option value="Shoulder">Shoulder</option>
+            <option value="Knees">Knees</option>
+            <option value="Toes">Toes</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="mb-3">
           <Form.Label>Bio</Form.Label>
           <Form.Control 
             as="textarea" 
@@ -62,20 +77,7 @@ const DoctorForm = ({ addDoctor, setAdd, id, first_name, last_name, bio, special
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3">
-        <Form.Select 
-          aria-label="Default select example"
-          name='speciality'
-          value={doctor.speciality}
-          onChange={(e) => setDoctor({ ...doctor, speciality: e.target.value })}
-        >
-          <option>Speciality</option>
-          <option value="Head">Head</option>
-          <option value="Shoulder">Shoulder</option>
-          <option value="Knees">Knees</option>
-          <option value="Toes">Toes</option>
-        </Form.Select>
-        </Form.Group>
+        
         <Button variant="primary" type="submit">
           Submit
         </Button>

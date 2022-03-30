@@ -1,6 +1,6 @@
   class Api::AppointmentsController < ApplicationController
-    before_action :set_doctors
-    before_action :set_appointments, only: [:show, :update, :destroy]
+    before_action :set_doctor
+    before_action :set_appointment, only: [:show, :update, :destroy]
 
   def index
     render json: @doctor.appointments
@@ -10,12 +10,21 @@
     render json: @appointment
   end
 
+  def unenrolledPatients
+    @users = User.all - @doctor.users
+    render json: @users
+  end
+
+  def enrolledPatients
+    render json: @doctor.users
+  end
+
   def create
     @appointment = @doctor.appointments.new(appointment_params)
     if @appointment.save
       render json: @appointment
     else
-      render json { errors: @appointment.errors }, status: :unprocessable_entity
+      render json: { errors: @appointment.errors }, status: :unprocessable_entity
     
     end
   end
@@ -24,28 +33,27 @@
     if @appointment.update(appointment_params)
       render json: @appointment
     else
-      render json { errors: @appointment.errors }, status: :unprocessable_entity
+      render json: { errors: @appointment.errors }, status: :unprocessable_entity
     end
   end
+
   def destroy
     @appointment.destroy
-    render json {message: 'Appointment deleted'}
-  
+    render json: {message: 'Appointment deleted'}
   end
 
   private
     def appointment_params
       params.require(:appointment).permit(:appt_date, :appt_time, :user_id)
-    
-  end
+    end
 
-  def set_doctor
-    @doctor = Doctor.find(params[:doctor_id])
-  end
+    def set_doctor
+      @doctor = Doctor.find(params[:doctor_id])
+    end
 
-  def set_appointment
-    @appointment = @doctor.appointments.find(params[:id])
-  end
+    def set_appointment
+      @appointment = @doctor.appointments.find(params[:id])
+    end
   end
 
 

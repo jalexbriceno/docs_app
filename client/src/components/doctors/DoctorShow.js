@@ -8,6 +8,7 @@ import { DoctorConsumer } from "../../provider/DoctorProvider";
 
 const DoctorShow = ({deleteDoctor}) => {
   const [doctor, setDoctor] = useState({ first_name: '', last_name: '', speciality: '', bio: ''})
+  
   const [currentUsers, setCurrentUsers] = useState([])
 
   const [editing, setEdit] = useState(false)
@@ -30,7 +31,7 @@ const DoctorShow = ({deleteDoctor}) => {
   return(
     <>
       <h1>{first_name} {last_name}</h1>
-      <h3>{speciality}</h3>
+      <h3>Speciality: {speciality}</h3>
       <h3>{bio}</h3>
 
       { editing ?
@@ -54,6 +55,14 @@ const DoctorShow = ({deleteDoctor}) => {
       >
         <Button>Appointment</Button>
       </Link> */}
+      <Link 
+        to={`/${doctor.id}/appointments`}
+        // state={{ doctorName: first_name}}
+      >
+        <Button >
+          HEART ICON
+        </Button>
+      </Link>
       <Button onClick={() => deleteDoctor(doctor.id)}>
         Delete
       </Button>

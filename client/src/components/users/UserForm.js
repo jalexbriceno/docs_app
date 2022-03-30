@@ -29,7 +29,7 @@ const UserForm = ({addUser, setAdd, id, first_name, last_name, phone, notes, upd
 
     <Card style={{ width: '32rem' }}>
       <Card.Body>
-      <h1>Create User</h1>
+      <h1>{ id ? "Update User" : "Create User"}</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>First Name</Form.Label>

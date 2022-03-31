@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import DoctorList from './DoctorList';
 import DoctorForm from './DoctorForm';
-import { Button } from 'react-bootstrap';
+import { Button, Modal, Card } from 'react-bootstrap';
 
 
 
@@ -10,8 +10,7 @@ import { Button } from 'react-bootstrap';
 const Doctors = () => {
   
   const [adding, setAdd] = useState(false)
-
-
+  
   return (
     <>
       {

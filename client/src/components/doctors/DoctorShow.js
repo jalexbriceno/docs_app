@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button, ListGroup, Col, Row } from 'react-bootstrap';
 import DoctorForm from './DoctorForm';
 import { DoctorConsumer } from "../../provider/DoctorProvider";
+import { DoctorUserShow } from '../styles/sharedStyles';
+import HeartSvg from '../../images/heart.svg'
+import TrashSvg from '../../images/trash.svg'
+import PencilSvg from '../../images/pencil.svg'
 
 const DoctorShow = ({deleteDoctor}) => {
   const [doctor, setDoctor] = useState({ first_name: '', last_name: '', speciality: '', bio: ''})
@@ -30,42 +34,40 @@ const DoctorShow = ({deleteDoctor}) => {
   const { first_name, last_name, speciality, bio } = doctor
   return(
     <>
-      <h1>{first_name} {last_name}</h1>
-      <h3>Speciality: {speciality}</h3>
-      <h3>{bio}</h3>
+      <DoctorUserShow>
+        <h2>{first_name} {last_name}</h2>
+        <h3>Speciality: {speciality}</h3>
+        <br></br>
+        <p>{bio}</p>
+        <Col>
+          { editing ?
+            <>
+              <DoctorForm
+                {...doctor}
+                setEdit={setEdit}
+              />
+              <Button onClick={() => setEdit(false)}>
+                Cancel
+              </Button>
+            </>
+            :
+            <img 
+              src={PencilSvg} onClick={() => setEdit(true)}> 
+            </img>
+            
+          }
+          <Link
+            to={`/${doctor.id}/appointments`}>
+            <img src={HeartSvg}></img>
+          </Link>
 
-      { editing ?
-        <>
-          <DoctorForm
-            {...doctor}
-            setEdit={setEdit}
-          />
-          <Button onClick={() => setEdit(false)}>
-            Cancel
-          </Button>
-        </>
-        :
-        <Button onClick={() => setEdit(true)}>
-          Edit
-        </Button>
-      }
-      {/* <Link 
-        to={`/${doctor.id}/appointments`}
-        state={{ doctorName: first_name, last_name }}
-      >
-        <Button>Appointment</Button>
-      </Link> */}
-      <Link 
-        to={`/${doctor.id}/appointments`}
-        // state={{ doctorName: first_name}}
-      >
-        <Button >
-          HEART ICON
-        </Button>
-      </Link>
-      <Button onClick={() => deleteDoctor(doctor.id)}>
-        Delete
-      </Button>
+          <img 
+          src={TrashSvg} onClick={() => deleteDoctor(doctor.id)}> 
+          </img>
+
+        </Col>
+
+      </DoctorUserShow>
       {/* <Button>
         Delete
       </Button> */}
